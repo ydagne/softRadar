@@ -1,0 +1,42 @@
+<!--
+
+Copyright 2015 Yihenew Beyene
+
+This file is part of SoftRadar.
+
+    SoftRadar is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SoftRadar is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SoftRadar.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+
+<?xml version='1.0' encoding='utf-8'?> 
+
+<!-- Radar configuration file -->
+
+<radarConfiguration date="Aug 2015" author="Beyene Yihenew" e-mail="yihenew.beyene@aalto.fi">
+
+		<txFreq        val = "145000000" />  <!--	transmit frequency (Hz) -->
+		<rxFreq        val = "193000000" />  <!--	receive frequency (Hz) -->
+		<txGain        val = "25" />         <!--	transmitter gain  (dB) -->
+		<rxGain        val = "10" />         <!--	receiver gain (dB) -->
+		<decimation    val = "50" />  <!--	Decimation factor (should be integers 4,5,...,512 -->
+		<externalClock val = "NO" />  <!--	Whether to use external 10 MHz clock -->
+		<!-- For USRP with internal GPS module, the clock will automatically lock to the GPS -->
+		
+		<deviceIP      val = "192.168.10.2" />  <!--	USRP IP address -->
+		 <!-- For USRP N-series, sampling rate is 100MHz => BW = 100M/decimationFactor -->
+	
+
+
+</radarConfiguration>

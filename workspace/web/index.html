@@ -1,0 +1,605 @@
+<!--
+
+Copyright 2015 Yihenew Beyene
+
+This file is part of SoftRadar.
+
+    SoftRadar is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SoftRadar is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SoftRadar.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+	<title>SoftRadar - Software Defined Radar</title>
+	
+	<meta name="author" content="your name" />
+	<meta name="description" content="" />
+ 
+	<link rel="stylesheet" href="web/styles/style.css" type="text/css" />
+	<link href="web/styles/prettify.css" rel="stylesheet">
+	<script src="web/js/prettify.js"></script>
+	<script src="web/js/jquery-1.9.1.js"></script>
+	<!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+</head>
+
+
+<body>
+
+	<div id="page">
+	
+	
+		<div id="logo">
+			<h1 style="color: black">SoftRadar - Remote Manager</h1>
+		</div>
+		<div id="nav">
+			<ul>
+				<li><a href="javascript:void(0)" onclick="JavaScript:navigatewin(0);">Home</a></li>
+				<li><a href="javascript:void(0)" onclick="JavaScript:navigatewin(1);">Waveform Design</a></li>
+				<li><a href="/log">Log File</a></li>
+				<li><a href="javascript:void(0)" onclick="JavaScript:navigatewin(2);">Help</a></li>
+			</ul>	
+		</div>
+		
+		
+		<div class="contenttop" id = "dark">
+		
+			<h2>Device state: <output style="color: #fff" id="STATE"> unknown </output> </h2>
+	    		
+			<h2>&nbsp;</h2>
+
+			<h2>Transceiver Configuration</h2>
+				<table align="center">
+					<tr>
+						<td align="left">
+							<ul id="INFOLIST" style="color: #fff">
+								<li><a ></a></li>
+							</ul>
+						</td>
+					</tr>
+				</table>
+		    	
+			<h2>&nbsp;</h2>
+			
+			<h2>Upload waveform file</h2>
+			
+			<form id="upload-file" method="post" 
+				enctype="multipart/form-data" action="JavaScript:uploadfile()">
+				<fieldset class="noborder">
+					<input name="file" type="file">
+				</fieldset>
+				<fieldset class="noborder">
+					<input type="submit" value="Upload"><br/>
+				</fieldset>
+				<fieldset class="noborder">
+					<output  id="uploadstate" style="color: #eee">  <output>
+				</fieldset>
+			</form>
+			
+			<h2>&nbsp;</h2>
+			
+			<h2>Actions</h2>
+			
+			<h4>&nbsp;</h4>
+
+			<div class = "round-button">
+				<a>
+					<img src="web/styles/img/start.png" alt="START" 
+						title="START" onClick="sendcommand(1)">
+				</a>
+			</div>
+				&nbsp; &nbsp;
+			<div class = "round-button">
+				<a>
+					<img src="web/styles/img/stop.png" alt="STOP" 
+						title="STOP" onClick="sendcommand(0)">
+				</a>
+			</div>
+				&nbsp; &nbsp;
+			<div class = "round-button">
+				<a>
+					<img src="web/styles/img/terminate.png" alt="TERMINATE"
+						 title="TERMINATE" onClick="sendcommand(2)">
+				</a>
+			</div>
+					
+			<h2>&nbsp;</h2>
+			
+
+		</div> <!-- Contenttop -->
+		
+		<h2>&nbsp;</h2>
+			
+			
+		<div class="contenttop" id="whiten" style="display:none">
+		
+		
+			<h2>Waveform design code generator</h2>
+			
+			<p>
+				Here, you can generate a Python code that produces 
+				waveform file for a SMPRF radar. Set few parameters 
+				and get the template code which you can download and modify.
+			</p>
+
+			<h3> Simultaneous Multiple Pulse Repetition Frequency
+			 (SMPRF) Waveform Parameters</h3>
+			 
+			 <p style="font-family: Helvetica;"> <b>REFERENCE:</b>  
+				 Juha Pirttil&auml; , Markku S. Lehtinen, Asko Huuskonen,
+			  	and Markku Markkanen, 2005: A proposed solution to the 
+			 	 range&ndash;doppler dilemma of weather radar measurements 
+			  	by using the SMPRF codes, practical results, and a comparison
+			   	with operational measurements. <i>J. Appl. Meteor.,</i>
+			    <b>44</b>, 1375&ndash;1390.
+			    doi: <a style="color:blue" 
+			    href="http://dx.doi.org/10.1175/JAM2288.1">
+			    <nobr>http://dx.doi.org/10.1175/JAM2288.1</nobr></a> 
+			</p>
+			
+			<form action="">
+			  <table>
+				<tr>
+					<td> Burst length </td>
+					<td> <input type="range" id="rg" name="" min="1"
+						 max="10500" val="1000" oninput="rgval.value=rg.value"> </td>
+					<td> <nobr><output name="rgval" id="rgv" for="rg">1000
+						</output> samples</nobr> </td>
+				</tr>
+				<tr>
+					<td> Pulse width </td>
+					<td> <input type="range" id="pw" name="" min="1"
+						 max="1000" val="4" oninput="pwval.value=pw.value">  </td>
+					<td> <nobr><output name="pwval"  id="pwv" for="pw">4
+						</output> samples</nobr> </td>
+				</tr>
+				<tr>
+					<td> PRF </td>
+					<td> <input type="text" id="prt" placeholder="eg. 20,150, 40"> </td>
+				</tr>
+			  </table>
+	
+			</form>
+
+			<input type="submit" value="Generate" onClick = "generateCode(1)"> 
+
+			<h2>&nbsp;</h2>
+			<h2>Source code</h2>
+
+			<div id="code"> 
+
+				<pre class="prettyprint"><code id="codetext"> </code></pre>
+			</div>
+
+			<!-- <input type="submit" id = "download" value="Download" onClick = "doDL()" disabled>  -->
+
+			<a id="downloadlink" href="#" download="radarWaveformGenerator.py" style="display: none">Download</a>
+		
+		</div> <!-- Contenttop -->
+		
+			<h2>&nbsp;</h2>
+		
+		<div id = "helpcontent"  style="display:none">
+			<div id="content">
+
+			<h2>SoftRadar</h2>
+				<p>
+					SoftRadar is a program that can transmit and receive
+					(synchronoulsy) radar waveforms. Currently, it targets
+					 Universal Software Radio Peripheral (USRP)
+					based hardwares only that support simultaneous Tx and Rx.
+				</p>
+		    	
+				<p>
+					The main streaming program is written in C++ and is 
+					responsible for configuring the hardware, transmitting and 
+					receiving radar signals. Some of the hardware settings
+					 (frequency, gain, bandwidth,...) are configured via a
+					 configuration file (located in config/radarConfig.xml). Other
+					 real-time controls are handled through
+					a socket communication which allows remote control too.
+    			</p>
+		</div>
+
+		<div id="contentside">
+		
+			
+				<p>
+				  Click <strong><a href="web/README.txt">here</a></strong> for more details.
+				</p>
+			
+		</div>
+
+		</div>
+		
+		<div id="footer">
+			<h4>&nbsp;</h4>
+			<hr/>
+			<h4>&nbsp;</h4>
+			<p>
+				&copy 2014 YIHENEW
+			</p>
+		</div>
+	</div>
+
+
+
+
+
+
+
+<script>
+
+
+function navigatewin(menuid){
+
+        var hom   = document.getElementById('dark'),
+            logfl = document.getElementById('whiten'),
+            helpp = document.getElementById('helpcontent');
+        if(menuid == 0)
+        {
+            hom.style.display = "block";
+            logfl.style.display = "none";
+            helpp.style.display = "none";
+        }
+        else if(menuid == 1)
+        {
+            hom.style.display = "none";
+            logfl.style.display = "block";
+            helpp.style.display = "none";
+        }
+        else if(menuid == 2)
+        {
+            hom.style.display = "none";
+            logfl.style.display = "none";
+            helpp.style.display = "block";
+        }
+
+}
+
+
+
+function getuploadstate(){
+
+var upvar = setInterval(function() {
+    $.ajax({
+            type : "GET",
+             url : "/uploadstate",
+        dataType : "text",
+         success : (function(data) {
+         
+                       document.getElementById('uploadstate').innerHTML = data;
+                       
+                       if(data != "" && data != " ")
+                       {
+                           clearInterval(upvar);
+                       }
+                  }), 
+           error : (function(data) { 
+                       document.getElementById('uploadstate').innerHTML = "failure";
+                       clearInterval(upvar);
+                  })
+    })
+    
+    }, 1000);
+  
+}                     
+
+function uploadfile(){
+
+        var form_data = new FormData($('#upload-file')[0]);
+        $.ajax({
+            type: 'POST',
+            url: '/uploadwaveform',
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            async: false,
+            success: function(data) {
+                document.getElementById('uploadstate').innerHTML = data;
+
+                if(data=="The waveform is being analyzed...")
+                {
+                      getuploadstate();
+                }
+
+
+            },
+            error: function(data){
+                document.getElementById('uploadstate').innerHTML = "File upload failed";
+            }
+        });
+
+}
+
+
+
+var cfg = setInterval(function() {
+
+   $.ajax({
+        type : "GET",
+        url : "/config",
+        data : {},
+        dataType : "text",
+        success : (function(data) {
+               var array = data.split(',');
+               var lists = "";
+
+               if(array.length>1)
+               {
+                  for(var i=0; i<array.length; i++)
+                  {
+                     if(i==0)
+                     {
+                        lists += "<br> <strong>"  + array[i] + "</strong></br>";
+                     }
+                     else
+                     {
+                        lists += "<li>"  + array[i] + "</li>";
+                     }
+                  }
+                  lists = lists.replace(/[\[\]']+/g,'');
+                  document.getElementById('INFOLIST').innerHTML = lists;
+                  clearInterval(cfg);
+               }
+               else{
+                   document.getElementById('INFOLIST').innerHTML = "<li>Loading configuration...</li>";
+               }
+        })
+   })
+}, 4000);
+
+
+
+setInterval(function() {
+
+   $.ajax({
+        type : "GET",
+        url : "/state",
+        data : {},
+        dataType : "text",
+        success : (function(data) {
+               document.getElementById('STATE').innerHTML = data;
+        }) 
+   })
+}, 1000)
+
+
+
+function sendcommand(cmd) {
+
+   if(cmd==1)
+   {
+     $.ajax({
+        type : "GET",
+        url : "/start",
+        dataType : "plain"
+     })
+   
+   }
+   else if(cmd==0)
+   {
+     $.ajax({
+        type : "GET",
+        url : "/stop",
+        dataType : "plain"
+     })
+   
+   }
+   else if(cmd==2)
+   {
+
+     var decsn;
+     if (confirm("Are you sure to shutdown the radio. " +
+                 "Remote access to the radio manager" +
+                 " will be terminated!") == true) {
+        $.ajax({
+           type : "GET",
+           url : "/terminate",
+           dataType : "plain",
+           success : (function(data) {
+                  
+               document.body.innerHTML = data;
+
+           }),
+           error : ( function(data) {
+               // document.body.innerHTML = data + " Failed to shutdown the radar!";
+               document.body.innerHTML = "<h2> Request sent to the server! </h2>";
+           })
+        })
+
+      }
+   
+   }
+   
+     
+}
+
+
+
+function generateCode(flag) {
+   
+   document.getElementById('downloadlink').style.display = "none";
+   
+   var invalidi = false;
+   var shortprt = false;
+
+   var burstlen = parseInt(document.getElementById('rgv').value);
+   var pulseduration = parseInt(document.getElementById('pwv').value);
+   var prt = document.getElementById('prt').value;
+
+   var tmp = prt.split(",");
+   var spans = pulseduration;
+
+   if(tmp.length == 0)
+   {
+      failure = true;
+   }
+   else
+   {
+      for (var i=0; i<tmp.length; i++)
+      {
+         tmp[i] = parseInt(tmp[i], 10);
+         if(isNaN(tmp[i]))
+         {
+            invalidi=true;
+            break;
+         }
+         if(tmp[i]<pulseduration)
+         {
+            shortprt = true;
+            break;
+         }
+         spans += tmp[i];
+      }
+   }
+
+
+   if(invalidi)
+   {
+      document.getElementById('code').innerHTML = "# Invalid inputs. check PRT values";        
+   }
+   else if(shortprt)
+   {
+      document.getElementById('code').innerHTML = "# PRT "+tmp[i]+ " is less than pulse duration!"; 
+   }
+   else if(spans > burstlen)
+   {
+      document.getElementById('code').innerHTML = "# PRT's exceed burst length!";        
+   }
+   else
+   {
+      
+      document.getElementById('prt').value = tmp;
+      document.getElementById('code').innerHTML = "<pre class=\"prettyprint\"><code" +
+                                                  "  id=\"codetext\">" + function(){/*
+
+#!/usr/bin/env python 
+
+# pulsed radar waveform generator
+
+import struct
+import math
+
+
+def generateWaveform():
+	
+*/}.toString().slice(14,-3)  +
+"	burstlen = "+burstlen+"    # This should match with configured value\n" +
+"	pulsewidth = "+pulseduration+" \n" + 
+"	prt = ("+tmp + ")\n" + function(){/*
+	pi_ = math.pi
+	phase = pi_/4.0
+	ampl = 0.4
+	waveform = ()
+	
+	idx = 0
+	for prtv in prt:
+	
+		# BPSK modulation  phi = pi/4
+		for i in range(pulsewidth):
+		
+			# real part, imaginary part
+			waveform += (ampl*math.cos(phase),ampl*math.sin(phase)) 
+			
+		idx += 1;
+			
+		for i in range(prtv-pulsewidth):
+		
+			waveform += (0.0,0.0)  # real part, imaginary part
+			
+
+	# Last part
+	for i in range(pulsewidth):
+	
+		# real part, imaginary part
+		waveform += (ampl*math.cos(phase),ampl*math.sin(phase))
+		
+	for i in range(2*burstlen-len(waveform)):
+	
+		waveform += (0.0,)  
+			
+			
+	waveformString = "".join( (struct.pack('f',v) for v in waveform))
+	
+	# write waveform to file
+	fileName  = "waveform.wm"
+	wmFile = open (fileName, "wb")
+	wmFile.write(waveformString)
+	wmFile.close()
+
+
+
+if __name__ == '__main__':
+    try:
+        generateWaveform()
+    except KeyboardInterrupt:
+        pass
+*/}.toString().slice(14,-3) + "</code></pre>";
+   
+     document.getElementById('downloadlink').setAttribute("href", "data:x-application/text," + 
+                 escape(document.getElementById('codetext').innerHTML) );  
+              
+     
+   document.getElementById('downloadlink').style.display = "inherit";  
+   
+      if(flag)
+       {
+          prettyPrint();
+       }
+
+   }
+
+
+
+}
+
+
+
+
+function doDL(){
+    /*
+    function dataUrl(data) {return "data:x-application/text," + escape(data);}
+    generateCode(0); // Remove code highlight temporarily    
+   window.open(dataUrl( document.getElementById('codetext').innerHTML ), 'waveformGenerator.py');
+    prettyPrint(); // Restore code highlight 
+   */ 
+}
+    
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
