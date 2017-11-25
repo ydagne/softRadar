@@ -2,7 +2,7 @@
 
 SoftRadar is a software defined radio that can transmit and receive (synchronoulsy) radar waveforms. Currently, it targets Universal Software Radio Peripheral (USRP) based hardwares only that support simultaneous Tx and Rx.
 
-The main streaming program is written in C++ and is responsible for configuring the hardware, transmitting and receiving radar signals. Some of the hardware settings (frequency, gain, bandwidth,...) are configured via a configuration file (located in config/radarConfig.xml). Other real-time controls are handled through a UDP socket for possible remote control. You can download the source code from [here] (https://github.com/yDagne/softRadar.git).
+The main streaming program is written in C++ and is responsible for configuring the hardware, transmitting and receiving radar signals. Some of the hardware settings (frequency, gain, bandwidth,...) are configured via a configuration file (located in config/radarConfig.xml). Other real-time controls are handled through a UDP socket for possible remote control. You can download the source code from [here](https://github.com/yDagne/softRadar.git).
 
 
 
@@ -104,7 +104,7 @@ Set [burst length (samples)] to the number of radar waveform samples that are re
 When you run the server multiple-times, it might fail to connect to the UDP port. This usually happens when the client web browser is still running. To avoid this, use other port number (8889,...), and it is good to stop the server from the web interface (with TERMINATE button) so that the webserver forces all its threads to terminate, and the browser leaves that port.
 
 
-##Remote Access to softRadar
+## Remote Access to softRadar
   
 As mentioned before softRadar can be remotely controlled through a web interface. This is possible only when the host computer is connected to the network and is visible from the other side where one want to access the radar. Once the web sever is started as follows
   
@@ -116,17 +116,17 @@ we can see the graphical interface with the url [ip address]:[portnumber]. For e
   <img src="image-a.png" alt="" width="474" height="auto"/>
 </p>
   
-### softRadar is configured in three stages:
+## softRadar is configured in three stages:
 
-1. Configuration: is stored in softRadar-vxx/config/radarConfig.xml. This is a static configuration of the radar and cannot be changed while the radar is running. Therefore, the web server does not allow remote update of configuration file. However, one can use other methods (such as ssh). Changes to the configuration will take effect only when the web server is restarted.
+1. **Configuration**: is stored in softRadar-vxx/config/radarConfig.xml. This is a static configuration of the radar and cannot be changed while the radar is running. Therefore, the web server does not allow remote update of configuration file. However, one can use other methods (such as ssh). Changes to the configuration will take effect only when the web server is restarted.
   
-2. Streaming: There are three streaming actions: START, STOP, TERMINATE.
+2. **Streaming**: There are three streaming actions: **START**, **STOP**, **TERMINATE**.
   
- - START - tells the device manager to start transmitting the radar waveform, and record received samples to file. With 1 Msamples/s sampling rate, the device manager records 8 MBytes of data every second.
- - STOP - suspends the streaming.
- - TERMINATE - this has to be executed only when one wants to shutdown the web server or power OFF the radar and USRP.
+ - **START** - tells the device manager to start transmitting the radar waveform, and record received samples to file. With 1 Msamples/s sampling rate, the device manager records 8 MBytes of data every second.
+ - **STOP** - suspends the streaming.
+ - **TERMINATE** - this has to be executed only when one wants to shutdown the web server or power OFF the radar and USRP.
 
- 3. Waveform upload: One can generate and upload new waveform file at any time even when the radar is streaming. The device manager records events that occur while streaming. The file is located in softRadar-vxx/workspace/log/[start-date]/deviceLog.txt where [start-date] is the directory name created with the name taken from the date-string. Every time the streamer is started it automatically creates new directory.
+3. **Waveform upload**: One can generate and upload new waveform file at any time even when the radar is streaming. The device manager records events that occur while streaming. The file is located in softRadar-vxx/workspace/log/[start-date]/deviceLog.txt where [start-date] is the directory name created with the name taken from the date-string. Every time the streamer is started it automatically creates new directory.
 
  ## Waveform design tool
   
@@ -159,11 +159,12 @@ Let us generate waveform file for length-1 SMPRF waveform with the following par
     </tbody>
   </table>
 
-  Set the parameters as shown below and press the<strong> Generate</strong> button.
+Set the parameters as shown below and press the<strong> Generate</strong> button.
 
 <p align="center">
   <img src="image-c.png" alt="" width="474" height="auto"/>
 </p>
+
 This will generate a python script which you can download and modify.
 
 <p align="center">
